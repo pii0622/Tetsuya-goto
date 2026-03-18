@@ -970,11 +970,7 @@ Working with grasses and plants gathered from his immediate surroundings, Goto p
       <h2>Contact</h2>
     </div>
 
-    <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="thanks.html">
-  <input type="hidden" name="form-name" value="contact">
-  <p style="display:none;">
-    <label>Don’t fill this out if you’re human: <input name="bot-field"></label>
-  </p>
+    <form class="contact-form" action="https://formspree.io/f/xwvralab" method="POST">
 
   <label>
     <span>Name</span>
@@ -1168,12 +1164,6 @@ Working with grasses and plants gathered from his immediate surroundings, Goto p
       if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
     });
   </script>
-<form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
-  <input type="text" name="name">
-  <input type="email" name="email">
-  <input type="text" name="subject">
-  <textarea name="message"></textarea>
-</form>
 
 </body>
 </html>
