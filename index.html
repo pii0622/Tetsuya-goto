@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tetsuya Goto | Tuticusa</title>
+  <meta name="description" content="Tetsuya Goto exhibition landing page" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=Noto+Sans+JP:wght@400;500&family=Shippori+Mincho:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090908;
+      --bg-soft: #11110f;
+      --panel: rgba(255,255,255,.05);
+      --panel-hover: rgba(255,255,255,.09);
+      --line: rgba(255,255,255,.13);
+      --text: #f4f1eb;
+      --muted: rgba(244,241,235,.72);
+      --max: 1240px;
+      --header-h: 72px;
+      --transition: 320ms cubic-bezier(.2,.7,.2,1);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Shippori Mincho", "Noto Sans JP", serif;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; color: inherit; }
+
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 30;
+      height: var(--header-h);
+      display: flex;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(0,0,0,.48), rgba(0,0,0,0));
+      transition: background var(--transition), backdrop-filter var(--transition), border-color var(--transition);
+      border-bottom: 1px solid transparent;
+    }
+    .site-header.scrolled {
+      background: rgba(9,9,8,.82);
+      backdrop-filter: blur(16px);
+      border-bottom-color: var(--line);
+    }
+    .header-inner {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand {
+      font-family: "EB Garamond", serif;
+      letter-spacing: .06em;
+      font-size: 1rem;
+      white-space: nowrap;
+    }
+    .desktop-nav {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      font-family: "EB Garamond", serif;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-size: .98rem;
+    }
+    .desktop-nav a {
+      position: relative;
+      opacity: .9;
+    }
+    .desktop-nav a::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: -3px;
+      width: 100%; height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+    }
+    .desktop-nav a:hover::after,
+    .desktop-nav a:focus-visible::after {
+      transform: scaleX(1);
+    }
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: 0;
+      padding: 8px 0 8px 8px;
+      cursor: pointer;
+    }
+    .menu-toggle span {
+      display: block;
+      width: 26px; height: 1px;
+      background: var(--text);
+      margin: 5px 0;
+    }
+    .mobile-nav {
+      position: fixed;
+      top: var(--header-h); right: 0;
+      width: min(78vw, 320px);
+      background: rgba(9,9,8,.95);
+      backdrop-filter: blur(16px);
+      border-left: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+      transform: translateX(100%);
+      transition: transform var(--transition);
+      z-index: 29;
+      font-family: "EB Garamond", serif;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .mobile-nav.open { transform: translateX(0); }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+    .slides {
+      position: absolute;
+      inset: 0;
+    }
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+      transform: scale(1.04);
+    }
+    .slide.active { opacity: 1; }
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .slide:first-child img {
+      object-position: center 75%;
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,.42), rgba(0,0,0,.18) 30%, rgba(0,0,0,.52)),
+        radial-gradient(circle at center, rgba(0,0,0,.08), rgba(0,0,0,.25));
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: min(calc(100% - 36px), 1080px);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding-top: 30px;
+    }
+    .hero-stack {
+      display: grid;
+      justify-items: center;
+      gap: 14px;
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 2.2s ease forwards;
+    }
+    .group-mark {
+      animation-delay: .7s;
+    }
+    .group-mark img {
+      width: min(47vw, 560px);
+      min-width: 180px;
+      height: auto;
+      filter: drop-shadow(0 4px 20px rgba(0,0,0,.24));
+    }
+    .artist-name {
+      animation-delay: 1.5s;
+      font-family: "Shippori Mincho", serif;
+      font-size: clamp(2.1rem, 5vw, 4.6rem);
+      font-weight: 300;
+      line-height: .96;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      text-shadow: 0 2px 18px rgba(0,0,0,.3);
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    section {
+      padding: 92px 0;
+    }
+    .section-inner {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+    .section-head {
+      margin-bottom: 36px;
+      display: grid;
+      gap: 8px;
+      justify-items: start;
+    }
+    .eyebrow {
+      font-family: "EB Garamond", serif;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+    h2 {
+      margin: 0;
+      font-family: "EB Garamond", serif;
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: .01em;
+    }
+    .single-heading {
+      font-family: "EB Garamond", serif;
+    }
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .cards {
+      display: grid;
+      gap: 40px;
+      justify-content: center;
+    }
+    .cards.work-cards {
+      grid-template-columns: repeat(3, minmax(300px, 380px));
+      justify-content: center;
+      justify-items: center;
+      margin: 0 auto;
+    }
+    .cards.pub-cards {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 8%;
+      width: 100%;
+      margin: 40px auto 0;
+    }
+    .card {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 18px;
+      overflow: hidden;
+      cursor: pointer;
+      text-align: left;
+      padding: 0;
+      transition: transform var(--transition), background var(--transition), border-color var(--transition);
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      background: var(--panel-hover);
+      border-color: rgba(255,255,255,.22);
+    }
+    .card-media {
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      background: #0d0d0c;
+    }
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 14px 10px 0;
+      display: grid;
+      gap: 0;
+      justify-items: center;
+      text-align: center;
+    }
+    .card-kicker {
+      display: none;
+    }
+    .card-title {
+      font-family: "Shippori Mincho", serif;
+      font-size: 1.25rem;
+      line-height: 1.5;
+      letter-spacing: .02em;
+      font-weight: 400;
+    }
+    .card-meta {
+      color: var(--muted);
+      font-size: .95rem;
+      display: none;
+    }
+    .pub-cards .card {
+      width: 36%;
+      aspect-ratio: 1 / 1;
+      min-width: 320px;
+      max-width: 460px;
+      flex: 0 0 auto;
+      background: transparent;
+      border: 0;
+      border-radius: 18px;
+      overflow: hidden;
+      padding: 0;
+    }
+    .pub-cards .card-media {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: auto;
+      overflow: hidden;
+      border-radius: 18px;
+      background: #0d0d0c;
+    }
+    .pub-cards .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .pub-cards .card-body {
+      display: none;
+    }
+    .pub-cards .card-title,
+    .pub-cards .card-meta,
+    .pub-cards .card-kicker {
+      display: none !important;
+    }
+    .pub-cards .card-media {
+      aspect-ratio: 1 / 1;
+    }
+    .pub-cards .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .text-panel {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel);
+      padding: 28px;
+    }
+    .text-panel p {
+      margin: 0;
+      white-space: pre-line;
+    }
+
+
+    .about-panel {
+      display: grid;
+      grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
+      gap: 42px;
+      align-items: start;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel);
+      padding: 28px;
+    }
+    .about-image {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      border-radius: 16px;
+      background: #0d0d0c;
+    }
+    .about-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .about-copy {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+    .about-kicker {
+      margin: 0;
+      font-family: "EB Garamond", serif;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+    .about-name-ja {
+      margin: 0;
+      font-family: "Shippori Mincho", serif;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 400;
+      line-height: 1.25;
+    }
+    .about-name-en {
+      margin: 0 0 10px;
+      font-family: "EB Garamond", serif;
+      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.2;
+    }
+    .about-text {
+      margin: 0;
+      color: var(--text);
+      white-space: pre-line;
+    }
+
+    
+    .contact-form{
+      max-width:760px;
+      display:grid;
+      gap:20px;
+    }
+    .contact-form label{
+      display:grid;
+      gap:8px;
+    }
+    .contact-form label span{
+      font-family:"EB Garamond",serif;
+      font-size:1.05rem;
+      letter-spacing:.04em;
+      color:rgba(244,241,235,.88);
+    }
+    .contact-form input,
+    .contact-form textarea{
+      width:100%;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:14px;
+      padding:14px 16px;
+      color:#f4f1eb;
+      font-family:"Noto Sans JP",sans-serif;
+      font-size:0.98rem;
+      line-height:1.6;
+      outline:none;
+      transition:border-color 220ms ease, background 220ms ease;
+    }
+    .contact-form input:focus,
+    .contact-form textarea:focus{
+      border-color:rgba(255,255,255,.34);
+      background:rgba(255,255,255,.05);
+    }
+    .contact-form textarea{
+      resize:vertical;
+      min-height:180px;
+    }
+    .contact-form button{
+      justify-self:start;
+      min-width:140px;
+      padding:12px 22px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background:transparent;
+      color:#f4f1eb;
+      font-family:"EB Garamond",serif;
+      font-size:1.05rem;
+      letter-spacing:.04em;
+      cursor:pointer;
+      transition:background 220ms ease,border-color 220ms ease,transform 220ms ease;
+    }
+    .contact-form button:hover{
+      background:rgba(255,255,255,.06);
+      border-color:rgba(255,255,255,.3);
+      transform:translateY(-1px);
+    }
+
+    
+    .contact-note{
+      margin:4px 0 0;
+      font-family:"EB Garamond",serif;
+      font-size:.98rem;
+      color:rgba(244,241,235,.6);
+    }
+
+
+    .price-panel {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel);
+      padding: 28px;
+      display: grid;
+      gap: 22px;
+    }
+    .price-note {
+      margin: 0;
+      color: var(--muted);
+      font-family: "EB Garamond", serif;
+      font-size: 1rem;
+      letter-spacing: .02em;
+    }
+    .price-group {
+      display: grid;
+      gap: 10px;
+    }
+    .price-group-title {
+      margin: 0;
+      font-family: "EB Garamond", serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      line-height: 1.1;
+    }
+    .price-list {
+      display: grid;
+      gap: 10px;
+    }
+    .price-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: baseline;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .price-work {
+      font-family: "Shippori Mincho", serif;
+      font-size: 1.05rem;
+      line-height: 1.45;
+    }
+    .price-value {
+      font-family: "EB Garamond", serif;
+      font-size: 1.05rem;
+      white-space: nowrap;
+      color: var(--text);
+    }
+    .price-foot {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: .95rem;
+      white-space: pre-line;
+    }
+
+
+    #works,
+    #publications,
+    #about,
+    #contact {
+      scroll-margin-top: 96px;
+    }
+
+
+    .film-section {
+      padding: 120px 0;
+    }
+    .film-card {
+      max-width: 420px;
+      margin: 0 auto;
+    }
+    .film-thumb {
+      aspect-ratio: 9 / 16;
+      width: 100%;
+      object-fit: cover;
+    }
+    .film-link {
+      display: block;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--panel);
+      transition: transform var(--transition), border-color var(--transition), opacity var(--transition);
+    }
+    .film-link:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.22);
+    }
+    .film-thumb {
+      aspect-ratio: 9 / 16;
+      width: 100%;
+      display: block;
+      object-fit: cover;
+      background: #111;
+    }
+    .film-caption {
+      padding: 14px 16px 18px;
+      display: grid;
+      gap: 4px;
+      text-align: left;
+    }
+    .film-title {
+      font-family: "EB Garamond", serif;
+      font-size: 1.2rem;
+      color: var(--text);
+    }
+    .film-meta {
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 30px 0 36px;
+    }
+    .footer-inner {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+      display: grid;
+      gap: 10px;
+      justify-items: center;
+      text-align: center;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+    .footer-icons {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 4px;
+    }
+    .footer-icon-link {
+      width: 22px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      opacity: .9;
+      transition: opacity var(--transition), transform var(--transition);
+    }
+    .footer-icon-link:hover {
+      opacity: 1;
+      transform: translateY(-1px);
+    }
+    .footer-icon-link svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+    }
+    .footer-meta {
+      display: grid;
+      gap: 2px;
+    }
+    .footer-meta p {
+      margin: 0;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(0,0,0,.8);
+      backdrop-filter: blur(8px);
+    }
+    .modal.open { display: flex; }
+    .modal-dialog {
+      width: min(100%, 1080px);
+      max-height: min(92svh, 980px);
+      overflow: auto;
+      border-radius: 22px;
+      border: 1px solid var(--line);
+      background: #0d0d0c;
+      box-shadow: 0 24px 80px rgba(0,0,0,.45);
+    }
+    .modal-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 18px 0;
+    }
+    .modal-kicker {
+      font-family: "EB Garamond", serif;
+      color: var(--muted);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      font-size: .92rem;
+    }
+    .modal-close {
+      background: transparent;
+      border: 0;
+      color: var(--text);
+      font-size: 1.8rem;
+      line-height: 1;
+      padding: 0 4px;
+      cursor: pointer;
+    }
+    .modal-grid {
+      padding: 0 18px 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(260px, .8fr);
+      gap: 20px;
+    }
+    .modal-visual img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border-radius: 16px;
+      background: #111;
+    }
+    .modal-thumbs {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(72px, 1fr));
+      gap: 10px;
+    }
+    .modal-thumb {
+      appearance: none;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0;
+      overflow: hidden;
+      background: transparent;
+      cursor: pointer;
+      opacity: .78;
+      transition: opacity var(--transition), border-color var(--transition);
+    }
+    .modal-thumb.active,
+    .modal-thumb:hover {
+      opacity: 1;
+      border-color: rgba(255,255,255,.45);
+    }
+    .modal-thumb img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+    }
+    .modal-copy {
+      display: grid;
+      align-content: start;
+      gap: 12px;
+      padding-top: 4px;
+    }
+    .modal-title {
+      margin: 0;
+      font-family: "EB Garamond", serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: .96;
+    }
+    .modal-meta {
+      margin: 0;
+      color: var(--muted);
+      font-size: .98rem;
+    }
+    .modal-text {
+      margin: 0;
+      color: var(--muted);
+      white-space: pre-line;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 980px) {
+      .cards.work-cards { grid-template-columns: repeat(2, minmax(300px, 380px)); justify-content: center; gap: 36px; }
+      .cards.pub-cards { gap: 5%; }
+      .pub-cards .card { width: min(42%, 420px); min-width: 280px; }
+      .modal-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 720px) {
+      .desktop-nav { display: none; }
+      .menu-toggle { display: block; }
+      .cards.work-cards { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+      .cards.pub-cards { gap: 28px; }
+      .cards.pub-cards {
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+      }
+      .pub-cards .card {
+        width: min(100%, 420px);
+        min-width: 0;
+      }
+      section { padding: 74px 0; }
+      .group-mark img { width: min(56vw, 430px); }
+      .artist-name { font-size: clamp(2rem, 11vw, 3.6rem); letter-spacing: .05em; }
+      .modal-dialog { border-radius: 18px; }
+      .modal-top { padding: 16px 16px 0; }
+      .modal-grid { padding: 0 16px 16px; }
+      .text-panel { padding: 22px; }
+      .about-panel { grid-template-columns: 1fr; gap: 22px; padding: 22px; }
+      .about-image { max-width: 420px; }
+      .price-panel { padding: 22px; }
+      .price-row { grid-template-columns: 1fr; gap: 4px; }
+      .footer-inner { justify-items: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <div class="brand">Tetsuya Goto</div>
+      <nav class="desktop-nav" aria-label="Primary">
+        <a href="#works">Works</a>
+        <a href="#publications">Publications</a>
+        <a href="#about">Profile</a>
+        <a href="price.html">Purchase</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+    <a href="#works">Works</a>
+    <a href="#publications">Publications</a>
+    <a href="#about">Profile</a>
+    <a href="price.html">Purchase</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <section class="hero" id="top">
+    <div class="slides" id="slides"></div>
+    <div class="hero-content">
+      <div class="hero-stack">
+        <div class="group-mark fade-in">
+          <img src="assets/logo_tuticusa.png" alt="tuticusa logo">
+        </div>
+        <div class="artist-name fade-in">TETSUYA<br>GOTO</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="works">
+    <div class="section-inner">
+      <div class="section-head">
+        <h2 class="single-heading">Works</h2>
+      </div>
+      <div class="cards work-cards">
+        <button class="card modal-trigger"
+          data-type="Work 01"
+          data-title="MUJINA"
+          data-meta="Sculpture / natural grasses"
+          data-text="蓑という着用を前提とした形態を踏襲しながら、実用の文脈から切り離された立体造形物として成立している。肩から裾へと広がる二段の層——それは雨や寒さをしのぐための機能が生み出した形であり、同時に、草の重なりが最も自然に見える形でもある。この作品は続く『方形貉』シリーズの出発点にあたる。\n\nFollowing the form of the raincoat as a garment, this work exists as a three-dimensional object removed from its utilitarian context. The two layered tiers spreading from shoulder to hem are a shape born of function, and simultaneously the most natural arrangement for layered grasses. It serves as the origin of the subsequent Quadratic Mujina series."
+          data-images='["assets/work1_01.jpg", "assets/work1_02.jpg", "assets/work1_03.jpg", "assets/work1_04.jpg", "assets/work1_05.jpg", "assets/work1_06.jpg", "assets/work1_07.jpg"]'>
+          <span class="card-media"><img src="assets/work1_01.jpg" alt="MUJINA"></span>
+          <span class="card-body">
+            <span class="card-kicker">Work 01</span>
+            <span class="card-title">MUJINA</span>
+            <span class="card-meta">Sculpture / natural grasses</span>
+          </span>
+        </button>
+
+        <button class="card modal-trigger"
+          data-type="Work 02"
+          data-title="方形貉ー原相"
+          data-meta="900×900mm / mujina-ami / multiple grasses"
+          data-text="900×900mmの正方形の面に、複数種の草がむじな編みによって層をなす。上部の青みを帯びた緑から、下部の白茶けた質感へ——草はその位置と素材の違いによって異なる表情を持つ。「原相」という語は、オリジナルの優位性ではなく、時間軸における先行性を指す。同じ技法・同じ寸法で制作された「異相」との対置によって、この作品はその位置を確定する。
+
+On a 900×900mm square, multiple grasses are layered through mujina-ami weaving. From the blue-tinged green at the top to the pale, weathered texture at the bottom, each position carries its own expression. "Prototype" denotes temporal precedence, not hierarchical superiority. This work finds its position only in relation to its counterpart, "Variant.""
+          data-images='["assets/work2_01.jpg", "assets/work2_02.jpg", "assets/work2_03.jpg", "assets/work2_04.jpg", "assets/work2_05.jpg", "assets/work2_06.jpg"]'>
+          <span class="card-media"><img src="assets/work2_01.jpg" alt="方形貉ー原相"></span>
+          <span class="card-body">
+            <span class="card-kicker">Work 02</span>
+            <span class="card-title">方形貉ー原相</span>
+            <span class="card-meta">900×900mm / mujina-ami / multiple grasses</span>
+          </span>
+        </button>
+
+        <button class="card modal-trigger"
+          data-type="Work 03"
+          data-title="方形貉ー異相"
+          data-meta="900×900mm / mujina-ami / multiple grasses"
+          data-text="900×900mmの正方形の面に、複数種の草がむじな編みによって層をなす。上部の青みを帯びた緑から、下部の白茶けた質感へ——草はその位置と素材の違いによって異なる表情を持つ。「原相」という語は、オリジナルの優位性ではなく、時間軸における先行性を指す。同じ技法・同じ寸法で制作された「異相」との対置によって、この作品はその位置を確定する。
+
+On a 900×900mm square, multiple grasses are layered through mujina-ami weaving. From the blue-tinged green at the top to the pale, weathered texture at the bottom, each position carries its own expression. This work is presented here as a counterpart within the same formal framework."
+          data-images='["assets/work3_01.jpg", "assets/work3_02.jpg", "assets/work3_03.jpg", "assets/work3_04.jpg", "assets/work3_05.jpg"]'>
+          <span class="card-media"><img src="assets/work3_01.jpg" alt="方形貉ー異相"></span>
+          <span class="card-body">
+            <span class="card-kicker">Work 03</span>
+            <span class="card-title">方形貉ー異相</span>
+            <span class="card-meta">900×900mm / mujina-ami / multiple grasses</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  
+
+  <section id="film" class="film-section">
+    <div class="section-inner">
+      <div class="section-head">
+        <h2>Film</h2>
+      </div>
+
+      <div class="film-card">
+        <a class="film-link" href="https://www.youtube.com/watch?v=UmLDz-GE_kk" target="_blank" rel="noopener noreferrer" aria-label="Watch film on YouTube">
+          <img class="film-thumb" src="https://img.youtube.com/vi/UmLDz-GE_kk/maxresdefault.jpg" alt="Process film thumbnail">
+          <div class="film-caption">
+            <div class="film-title">Watch on YouTube</div>
+            <div class="film-meta">Vertical video documentation of the making process</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="publications">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2>Publications</h2>
+      </div>
+      <div class="cards pub-cards">
+        <button class="card modal-trigger"
+          data-type="Publication 01"
+          data-title="草莚 / so-en"
+          data-meta="A3判 実物大アコーディオンブック + 8ページ冊子 / A3 accordion book (full scale) + 8-page booklet"
+          data-text="6メートルを超える草の面を編み、撮影し、実物大に印刷した蛇腹折りの本。揃えて、束ねて、並べる——その反復だけによって生まれた面を、写真に撮り、紙に印刷することで生じた新たなsurface。スケールの体験を、手のひらに収まる別の形へと変換したもの。
+
+A surface of grass exceeding 6 metres in length, woven, photographed, and printed at full scale in accordion format. Not a reduction of something large — a conversion of the experience of scale into a form held in the palm. The photographic reproduction becomes a new surface in itself."
+          data-images='["assets/pub1_01.jpg", "assets/pub1_02.jpg", "assets/pub1_03.jpg"]'>
+          <span class="card-media"><img src="assets/pub1_01.jpg" alt="草莚 so-en"></span>
+          <span class="card-body">
+            <span class="card-kicker">Publication 01</span>
+            <span class="card-title">草莚</span>
+            <span class="card-meta">so-en</span>
+          </span>
+        </button>
+
+        <button class="card modal-trigger"
+          data-type="Publication 02"
+          data-title="Postcard set"
+          data-meta="Set of postcards"
+          data-text="Selected postcard images from the works. A small printed set conceived as an accessible extension of the exhibition."
+          data-images='["assets/pub2_01.jpg", "assets/pub2_02.jpg", "assets/pub2_03.jpg"]'>
+          <span class="card-media"><img src="assets/pub2_01.jpg" alt="Postcard set"></span>
+          <span class="card-body">
+            <span class="card-kicker">Publication 02</span>
+            <span class="card-title">Postcard set</span>
+            <span class="card-meta">Set of postcards</span>
+          </span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-inner">
+      <div class="section-head">
+        
+        <h2>Profile</h2>
+      </div>
+      <div class="about-panel">
+        <div class="about-image">
+          <img src="assets/about_profile.jpg" alt="後藤哲也 / Tetsuya Goto">
+        </div>
+        <div class="about-copy">
+          <p class="about-kicker">Profile</p>
+          <h3 class="about-name-ja">後藤哲也</h3>
+          <p class="about-name-en">Tetsuya Goto</p>
+          <p class="about-text">身近にある草木を素材として、かつて人々の暮らしのそばに当然のように存在していた質感を再現する試みを続けている。均質な素材を丁寧に選別し、整理して揃え、束ねて並べることでひとつの面を構成し、その質感を表現すること。また、それらが風雨にさらされ、時間の経過とともに色や形が変化していく様を表現すること。立体造形作品の制作と、それらを撮影した写真作品の両面から、忘れられつつある素材の記憶を掘り起こす活動を行っている。
+
+Working with grasses and plants gathered from his immediate surroundings, Goto pursues the recreation of textures that once existed naturally alongside human life. By carefully selecting, ordering, and layering homogeneous materials, he constructs surfaces that carry the memory of those textures. Through both three-dimensional works and the photographs made from them, he excavates the fading memory of materials that have been all but replaced by industrial production.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+  <div class="section-inner">
+    <div class="section-head">
+      <h2>Contact</h2>
+    </div>
+
+    <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="thanks.html">
+  <input type="hidden" name="form-name" value="contact">
+  <p style="display:none;">
+    <label>Don’t fill this out if you’re human: <input name="bot-field"></label>
+  </p>
+
+  <label>
+    <span>Name</span>
+    <input type="text" name="name" placeholder="Your name">
+  </label>
+
+  <label>
+    <span>Email</span>
+    <input type="email" name="email" placeholder="your@email.com">
+  </label>
+
+  <label>
+    <span>Subject</span>
+    <input type="text" name="subject" placeholder="Subject">
+  </label>
+
+  <label>
+    <span>Message</span>
+    <textarea name="message" rows="7" placeholder="Write your message here"></textarea>
+  </label>
+
+  <button type="submit">Send</button>
+  
+</form>
+  </div>
+</section>
+
+
+  
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-icons">
+        <a class="footer-icon-link" href="https://instagram.com/ttggss8" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+            <circle cx="12" cy="12" r="4"></circle>
+            <circle cx="17.5" cy="6.5" r="1"></circle>
+          </svg>
+        </a>
+        <a class="footer-icon-link" href="mailto:vernacularworks@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 6h16v12H4z"></path>
+            <path d="m4 7 8 6 8-6"></path>
+          </svg>
+        </a>
+      </div>
+      <div class="footer-meta">
+        <p>© 2026 Tetsuya Goto</p>
+        <p>Izu, Japan</p>
+        <p>Site by vernacular works</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-top">
+        <div class="modal-kicker" id="modalKicker"></div>
+        <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+      </div>
+      <div class="modal-grid">
+        <div class="modal-visual">
+          <img id="modalImage" src="" alt="">
+          <div class="modal-thumbs" id="modalThumbs"></div>
+        </div>
+        <div class="modal-copy">
+          <h3 class="modal-title" id="modalTitle"></h3>
+          <p class="modal-meta" id="modalMeta"></p>
+          <p class="modal-text" id="modalText"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const heroImages = [
+        "assets/carousel_11.jpg",
+        "assets/carousel_04.jpg",
+        "assets/carousel_08.jpg",
+        "assets/carousel_07.jpg",
+        "assets/carousel_10.jpg",
+        "assets/carousel_05.jpg",
+        "assets/carousel_02.jpg",
+        "assets/carousel_06.jpg",
+        "assets/carousel_09.jpg",
+        "assets/carousel_03.jpg",
+        "assets/carousel_01.jpg"
+    ];
+
+    const slides = document.getElementById('slides');
+    heroImages.forEach((src, index) => {
+      const slide = document.createElement('div');
+      slide.className = 'slide' + (index === 0 ? ' active' : '');
+      slide.innerHTML = `<img src="${src}" alt="carousel image ${index + 1}">`;
+      slides.appendChild(slide);
+    });
+
+    const slideEls = Array.from(document.querySelectorAll('.slide'));
+    let currentSlide = 0;
+    if (slideEls.length > 1) {
+      setInterval(() => {
+        slideEls[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slideEls.length;
+        slideEls[currentSlide].classList.add('active');
+      }, 5200);
+    }
+
+    const header = document.getElementById('siteHeader');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 24);
+    });
+
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileNav = document.getElementById('mobileNav');
+    menuToggle.addEventListener('click', () => {
+      const open = mobileNav.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(open));
+    });
+    mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      mobileNav.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }));
+
+    const modal = document.getElementById('modal');
+    const modalImage = document.getElementById('modalImage');
+    const modalThumbs = document.getElementById('modalThumbs');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalMeta = document.getElementById('modalMeta');
+    const modalText = document.getElementById('modalText');
+    const modalKicker = document.getElementById('modalKicker');
+    const modalClose = document.getElementById('modalClose');
+
+    function setActiveThumb(button) {
+      Array.from(modalThumbs.children).forEach(el => el.classList.remove('active'));
+      button.classList.add('active');
+    }
+
+    function renderThumbs(images, title) {
+      modalThumbs.innerHTML = '';
+      if (!images || images.length <= 1) return;
+      images.forEach((src, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'modal-thumb' + (index === 0 ? ' active' : '');
+        btn.type = 'button';
+        btn.setAttribute('aria-label', `${title} image ${index + 1}`);
+        btn.innerHTML = `<img src="${src}" alt="">`;
+        btn.addEventListener('click', () => {
+          modalImage.src = src;
+          setActiveThumb(btn);
+        });
+        modalThumbs.appendChild(btn);
+      });
+    }
+
+    function openModal(data) {
+      const images = JSON.parse(data.images || '[]');
+      const first = images[0] || '';
+      modalImage.src = first;
+      modalImage.alt = data.title;
+      modalTitle.textContent = data.title;
+      modalMeta.textContent = data.meta;
+      modalText.textContent = data.text;
+      modalKicker.textContent = data.type;
+      renderThumbs(images, data.title);
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.modal-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => openModal({
+        type: trigger.dataset.type,
+        title: trigger.dataset.title,
+        meta: trigger.dataset.meta,
+        text: trigger.dataset.text,
+        images: trigger.dataset.images
+      }));
+    });
+
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => {
+      if (e.target === modal) closeModal();
+    });
+    window.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
+  </script>
+<form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="text" name="name">
+  <input type="email" name="email">
+  <input type="text" name="subject">
+  <textarea name="message"></textarea>
+</form>
+
+</body>
+</html>
