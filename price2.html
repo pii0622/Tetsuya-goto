@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Price List | Tetsuya Goto</title>
+  <meta name="description" content="Price list for works and publications by Tetsuya Goto" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500;600&family=Noto+Sans+JP:wght@400;500&family=Shippori+Mincho:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090908;
+      --panel: rgba(255,255,255,.05);
+      --line: rgba(255,255,255,.13);
+      --text: #f4f1eb;
+      --muted: rgba(244,241,235,.72);
+      --max: 1040px;
+      --header-h: 72px;
+      --transition: 320ms cubic-bezier(.2,.7,.2,1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Noto Sans JP", sans-serif;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: inherit; text-decoration: none; }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      height: var(--header-h);
+      display: flex;
+      align-items: center;
+      background: rgba(9,9,8,.82);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand {
+      font-family: "EB Garamond", serif;
+      letter-spacing: .06em;
+      font-size: 1rem;
+      white-space: nowrap;
+    }
+    .nav {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      font-family: "EB Garamond", serif;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-size: .98rem;
+    }
+    .nav a {
+      position: relative;
+      opacity: .9;
+    }
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: -3px;
+      width: 100%; height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform var(--transition);
+    }
+    .nav a:hover::after,
+    .nav a:focus-visible::after,
+    .nav a.active::after { transform: scaleX(1); }
+
+    main { padding: 72px 0 96px; }
+    .section-inner {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+    .section-head {
+      margin-bottom: 28px;
+      display: grid;
+      gap: 8px;
+    }
+    .eyebrow {
+      font-family: "EB Garamond", serif;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+    h1 {
+      margin: 0;
+      font-family: "EB Garamond", serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 500;
+      line-height: 1;
+    }
+    .price-panel {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel);
+      padding: 28px;
+      display: grid;
+      gap: 24px;
+    }
+    .price-note {
+      margin: 0;
+      color: var(--muted);
+      font-family: "EB Garamond", serif;
+      font-size: 1rem;
+      letter-spacing: .02em;
+    }
+    .price-group {
+      display: grid;
+      gap: 12px;
+    }
+    .price-group-title {
+      margin: 0;
+      font-family: "EB Garamond", serif;
+      font-size: 1.55rem;
+      font-weight: 500;
+      line-height: 1.1;
+    }
+    .price-list {
+      display: grid;
+      gap: 10px;
+    }
+    .price-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 20px;
+      align-items: baseline;
+      padding: 0 0 10px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .price-work {
+      font-family: "Shippori Mincho", serif;
+      font-size: 1.05rem;
+      line-height: 1.45;
+    }
+    .price-value {
+      font-family: "EB Garamond", serif;
+      font-size: 1.08rem;
+      white-space: nowrap;
+      color: var(--text);
+    }
+    .price-foot {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: .95rem;
+      white-space: pre-line;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 8px;
+      font-family: "EB Garamond", serif;
+      color: var(--muted);
+    }
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 30px 0 36px;
+    }
+    .footer-inner {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+      display: grid;
+      gap: 10px;
+      justify-items: center;
+      text-align: center;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+    .footer-icons {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 4px;
+    }
+    .footer-icon-link {
+      width: 22px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text);
+      opacity: .9;
+      transition: opacity var(--transition), transform var(--transition);
+    }
+    .footer-icon-link:hover {
+      opacity: 1;
+      transform: translateY(-1px);
+    }
+    .footer-icon-link svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+    }
+    .footer-meta {
+      display: grid;
+      gap: 2px;
+    }
+    .footer-meta p { margin: 0; }
+
+    @media (max-width: 720px) {
+      .nav { gap: 14px; font-size: .88rem; }
+      main { padding: 52px 0 80px; }
+      .price-panel { padding: 22px; }
+      .price-row { grid-template-columns: 1fr; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="index.html">Tetsuya Goto</a>
+      <nav class="nav" aria-label="Primary">
+        <a href="index.html#works">Works</a>
+        <a href="index.html#publications">Publications</a>
+        <a href="index.html#about">About</a>
+        <a class="active" href="price.html">Purchase</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="section-inner">
+        <div class="section-head">
+          <div class="eyebrow">Purchase</div>
+          <h1>Price List</h1>
+        </div>
+
+        <div class="price-panel">
+          <p class="price-note">Artworks are priced in USD. Publications are priced in JPY.</p>
+
+          <div class="price-group">
+            <h2 class="price-group-title">Artworks</h2>
+            <div class="price-list">
+              <div class="price-row">
+                <div class="price-work">MUJINA</div>
+                <div class="price-value">Price on request</div>
+              </div>
+              <div class="price-row">
+                <div class="price-work">方形貉 — 原相</div>
+                <div class="price-value">Price on request</div>
+              </div>
+              <div class="price-row">
+                <div class="price-work">方形貉 — 異相</div>
+                <div class="price-value">Price on request</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="price-group">
+            <h2 class="price-group-title">Publications</h2>
+            <div class="price-list">
+              <div class="price-row">
+                <div class="price-work">草莚 / so-en</div>
+                <div class="price-value">JPY 7,000</div>
+              </div>
+              <div class="price-row">
+                <div class="price-work">Postcard set</div>
+                <div class="price-value">JPY 1,500</div>
+              </div>
+            </div>
+          </div>
+
+          <p class="price-foot">Please inquire directly during the exhibition for availability and purchase details.</p>
+          <a class="back-link" href="index.html">← Back to main page</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-icons">
+        <a class="footer-icon-link" href="https://instagram.com/ttggss8" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+            <circle cx="12" cy="12" r="4"></circle>
+            <circle cx="17.5" cy="6.5" r="1"></circle>
+          </svg>
+        </a>
+        <a class="footer-icon-link" href="mailto:vernacularworks@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 6h16v12H4z"></path>
+            <path d="m4 7 8 6 8-6"></path>
+          </svg>
+        </a>
+      </div>
+      <div class="footer-meta">
+        <p>© 2026 Tetsuya Goto</p>
+        <p>Izu, Japan</p>
+        <p>Site by vernacular works</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
