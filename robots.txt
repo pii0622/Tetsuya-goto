@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /index2.html
+Disallow: /price2.html
+
+Sitemap: https://tetsuya-goto.com/sitemap.xml
