@@ -4,4 +4,4 @@ Disallow: /price.html
 Disallow: /index2.html
 Disallow: /price2.html
 
-Sitemap: https://tetsuya-goto.com/sitemap.xml
+Sitemap: https://gototetsuya.com/sitemap.xml
