@@ -434,72 +434,6 @@
     }
 
     
-    .contact-form{
-      max-width:760px;
-      display:grid;
-      gap:20px;
-    }
-    .contact-form label{
-      display:grid;
-      gap:8px;
-    }
-    .contact-form label span{
-      font-family:"EB Garamond",serif;
-      font-size:1.05rem;
-      letter-spacing:.04em;
-      color:rgba(244,241,235,.88);
-    }
-    .contact-form input,
-    .contact-form textarea{
-      width:100%;
-      background:rgba(255,255,255,.03);
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:14px;
-      padding:14px 16px;
-      color:#f4f1eb;
-      font-family:"Noto Sans JP",sans-serif;
-      font-size:0.98rem;
-      line-height:1.6;
-      outline:none;
-      transition:border-color 220ms ease, background 220ms ease;
-    }
-    .contact-form input:focus,
-    .contact-form textarea:focus{
-      border-color:rgba(255,255,255,.34);
-      background:rgba(255,255,255,.05);
-    }
-    .contact-form textarea{
-      resize:vertical;
-      min-height:180px;
-    }
-    .contact-form button{
-      justify-self:start;
-      min-width:140px;
-      padding:12px 22px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.18);
-      background:transparent;
-      color:#f4f1eb;
-      font-family:"EB Garamond",serif;
-      font-size:1.05rem;
-      letter-spacing:.04em;
-      cursor:pointer;
-      transition:background 220ms ease,border-color 220ms ease,transform 220ms ease;
-    }
-    .contact-form button:hover{
-      background:rgba(255,255,255,.06);
-      border-color:rgba(255,255,255,.3);
-      transform:translateY(-1px);
-    }
-
-    
-    .contact-note{
-      margin:4px 0 0;
-      font-family:"EB Garamond",serif;
-      font-size:.98rem;
-      color:rgba(244,241,235,.6);
-    }
-
 
     .price-panel {
       border: 1px solid var(--line);
@@ -560,8 +494,7 @@
 
     #works,
     #publications,
-    #about,
-    #contact {
+    #about {
       scroll-margin-top: 96px;
     }
 
@@ -852,7 +785,6 @@
         <a href="#works">Works</a>
         <a href="#publications">Publications</a>
         <a href="#about">Profile</a>
-        <a href="#contact">Contact</a>
       </nav>
       <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -864,7 +796,6 @@
     <a href="#works">Works</a>
     <a href="#publications">Publications</a>
     <a href="#about">Profile</a>
-    <a href="#contact">Contact</a>
   </nav>
 
   <section class="hero" id="top">
@@ -1015,41 +946,6 @@ Working with grasses and plants gathered from his immediate surroundings, Goto p
     </div>
   </section>
 
-  <section id="contact">
-  <div class="section-inner">
-    <div class="section-head">
-      <h2>Contact</h2>
-    </div>
-
-    <form class="contact-form" action="https://formspree.io/f/xwvralab" method="POST">
-
-  <input type="hidden" name="_next" value="https://gototetsuya.com/thanks.html">
-
-  <label>
-    <span>Name</span>
-    <input type="text" name="name" placeholder="Your name">
-  </label>
-
-  <label>
-    <span>Email</span>
-    <input type="email" name="email" placeholder="your@email.com">
-  </label>
-
-  <label>
-    <span>Subject</span>
-    <input type="text" name="subject" placeholder="Subject">
-  </label>
-
-  <label>
-    <span>Message</span>
-    <textarea name="message" rows="7" placeholder="Write your message here"></textarea>
-  </label>
-
-  <button type="submit">Send</button>
-  
-</form>
-  </div>
-</section>
 
 
   
